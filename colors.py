@@ -13,19 +13,19 @@ elements.forEach(e => e.parentNode.removeChild(e))
 """)
     driver.save_screenshot('temp/screenshot.png')
 
-    img = cv2.imread('temp/screenshot.png') # Leia a imagem com OpenCV
-    img = cv2.resize(img, (128, 128)) # Redimensionar imagem para aumentar a velocidade da análise de cores
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) # Mude para RGB (OpenCV usa BGR)
+    img = cv2.imread('temp/screenshot.png')
+    img = cv2.resize(img, (128, 128))
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-    pixels = img.reshape(-1, 3) # Redimensione a imagem para ser uma lista de pixels
+    pixels = img.reshape(-1, 3)
 
-    kmeans = KMeans(n_clusters=5) # Execute o algoritmo de agrupamento KMeans
+    kmeans = KMeans(n_clusters=5)
     kmeans.fit(pixels)
 
-    colors = kmeans.cluster_centers_ # Mostre as cores predominantes
+    colors = kmeans.cluster_centers_
     labels = kmeans.labels_
 
-    _, counts = np.unique(labels, return_counts=True) # Calcule as porcentagens
+    _, counts = np.unique(labels, return_counts=True)
     percentages = counts / len(labels)
 
     color_set = list()
