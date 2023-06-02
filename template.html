@@ -59,7 +59,7 @@
 <body>
   <div class="container">
     <div class="col">
-      <img src="https://pop.proddigital.com.br/wp-content/uploads/sites/8/2021/07/naruto-1.jpg" alt="Imagem" />
+      <img src="{{ image_path }}" alt="Imagem" />
     </div>
 
     <div class="col" style="margin-left: 4vh">
@@ -106,9 +106,7 @@
 
   <script>
     const colors = {{ colors }}
-    const fonts = {{ fonts }}
 
-    console.log(fonts[0].fonts[0])
     // Dados do gráfico
     var data = {
       labels: ["Primária", "Secundária", "Accent"],

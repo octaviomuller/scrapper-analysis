@@ -18,10 +18,10 @@ import tempfile
 # # Abrir o arquivo HTML no navegador padrão
 # webbrowser.open('file://' + temp_file_path)
 
-def open_template(colors, fonts, products):
+def open_template(colors, fonts, products, image_path):
     env = Environment(loader=FileSystemLoader('.'))
     template = env.get_template('template.html')
-    output = template.render(colors=colors, fonts=fonts, products=products)
+    output = template.render(colors=colors, fonts=fonts, products=products, image_path=image_path)
 
     # Escrever o conteúdo renderizado em um arquivo HTML temporário
     with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.html') as temp_file:
