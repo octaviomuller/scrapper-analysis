@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Template com Imagem e Gráfico de Pizza</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .col img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    canvas {
+      max-width: 300px;
+      max-height: 300px;
+    }
+
+    .row {
+      flex: 1;
+      display: flex;
+    }
+
+    .col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .title {
+      font-size: 4vh;
+      font-weight: 700;
+      margin-left: 2vh;
+      margin-bottom: 1vh;
+    }
+
+    .text {
+      font-size: 2vh;
+      font-weight: 500;
+      margin: 4px 0px;
+    }
+
+    .list-container {
+      margin-left: 2.5vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="col" style="justify-content: flex-start;">
+      <img src="https://pop.proddigital.com.br/wp-content/uploads/sites/8/2021/07/naruto-1.jpg" alt="Imagem" />
+    </div>
+
+    <div class="col" style="margin-left: 4vh">
+      <div class="row">
+        <div class="col" style="align-items: flex-start">
+          <div class="title">Cores</div>
+          <canvas id="pie-chart"></canvas>
+        </div>
+
+        <div class="col" style="justify-content: center">
+          {% for color in colors %}
+          <!-- color format 'rgb(0, 0, 0)'' -->
+          <div class="text" style="color: {{color.rgb}}">
+            {{color.name}}: {{color.rgb}}; ({{color.percentage}}%)
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 4vh">
+        <div class="col">
+          <div class="title">Fontes</div>
+
+          <div class="list-container">
+            {% for font in fonts %}
+            <div class="text">
+              {{font.tag}}: <span style="font-family: {{font.fonts[0]}};">{{font.fonts[0]}}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col">
+          <div class="title">Produtos</div>
+
+          <ul class="list-container">
+            {% for product in products %}
+            <li class="text">{{ product }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const colors = {{ colors }}
+    const fonts = {{ fonts }}
+    
+    console.log(fonts[0].fonts[0])
+    // Dados do gráfico
+    var data = {
+      labels: ["Primária", "Secundária", "Accent"],
+      datasets: [
+        {
+          data: [
+            {{ colors[0].percentage }},
+        {{ colors[1].percentage }},
+      {{ colors[2].percentage }},
+          ],
+    backgroundColor: [
+      "{{ colors[0].rgb }}",
+      "{{ colors[1].rgb }}",
+      "{{ colors[2].rgb }}",
+    ],
+      hoverBackgroundColor: [
+        "{{ colors[0].rgb }}",
+        "{{ colors[1].rgb }}",
+        "{{ colors[2].rgb }}",
+      ],
+    },
+      ],
+    };
+
+    // Configurações do gráfico
+    var options = {
+      responsive: true,
+      maintainAspectRatio: false,
+    };
+
+    // Criação do gráfico
+    var ctx = document.getElementById("pie-chart").getContext("2d");
+    var myPieChart = new Chart(ctx, {
+      type: "pie",
+      data: data,
+      options: options,
+    });
+  </script>
+</body>
+
+</html>
