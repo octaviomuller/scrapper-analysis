@@ -19,4 +19,4 @@ def get_products(driver):
         if len(text.split()) > 5 and len(set(text.split())) > 4:
             product_titles.add(text)
 
-    return product_titles
+    return list(product_titles)
