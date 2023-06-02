@@ -44,11 +44,17 @@
       margin-bottom: 1vh;
     }
 
-    .text {
+    .text-with-shadow {
       font-size: 2.5vh;
       font-weight: 300;
       margin: 4px 0px;
       text-shadow: -0.5px -0.5px 0 black, 0.5px -0.5px 0 black, -0.5px 0.5px 0 black, 0.5px 0.5px 0 black;
+    }
+
+    .text {
+      font-size: 2.5vh;
+      font-weight: 500;
+      margin: 4px 0px;
     }
 
     .list-container {
@@ -73,7 +79,7 @@
         <div class="col" style="justify-content: center">
           {% for color in colors %}
           <!-- color format 'rgb(0, 0, 0)'' -->
-          <div class="text" style="color: {{color.rgb}}">
+          <div class="text-with-shadow" style="color: {{color.rgb}}">
             {{color.name}}: {{color.rgb}}; ({{color.percentage}}%)
           </div>
           {% endfor %}
