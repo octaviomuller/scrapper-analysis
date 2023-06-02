@@ -55,6 +55,14 @@
       font-size: 2.5vh;
       font-weight: 500;
       margin: 4px 0px;
+
+      /* truncate text */
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
     }
 
     .list-container {
@@ -101,11 +109,11 @@
         <div class="col">
           <div class="title">Produtos</div>
 
-          <ul class="list-container">
+          <div class="list-container">
             {% for product in products %}
-            <li class="text">{{ product }}</li>
+            <div class="text">• {{ product }}</div>
             {% endfor %}
-          </ul>
+          </div>
         </div>
       </div>
     </div>
