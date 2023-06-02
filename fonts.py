@@ -1,5 +1,6 @@
 # TODO: Corrigir comentários
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import StaleElementReferenceException
 
 def not_empty_fonts(font):
     return len(font['fonts']) > 0
@@ -8,8 +9,11 @@ def get_font(elements):
     font_set = set()
 
     for element in elements:
-        font = element.value_of_css_property("font-family")
-        font_set.add(font)
+        try:
+            font = element.value_of_css_property("font-family")
+            font_set.add(font)
+        except StaleElementReferenceException:
+            print('Error getting font')
 
     return list(font_set)
 

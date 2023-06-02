@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from jinja2 import Environment, FileSystemLoader
 import os
@@ -25,7 +26,9 @@ def save_dataset(dataset, file_name):
             json.dump(lista_dicionarios, json_file, indent=4)
 
 def url_analysis(url, dataset_op = False):
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    chrome_options = Options()
+    chrome_options.add_argument("--start-maximized")
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), chrome_options=chrome_options)
     driver.get(url)
 
     colors = get_colors(driver)
