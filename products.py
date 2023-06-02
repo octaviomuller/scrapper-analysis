@@ -9,11 +9,13 @@ from nltk import pos_tag
 import re
 
 def get_products(driver):
+    nltk.download('punkt')
+    nltk.download('averaged_perceptron_tagger')
+
     soup = BeautifulSoup(driver.page_source, 'html.parser') # Capturando a página HTML
     text_tags = soup.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'span']) # Buscando todas as tags de texto na página
     product_titles = set() # Inicializando um conjunto para guardar os títulos dos produtos
 
-    # nltk.download('averaged_perceptron_tagger')
 
     # Analisando cada tag
     for tag in text_tags:
