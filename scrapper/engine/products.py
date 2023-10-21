@@ -1,10 +1,5 @@
-# TODO: Corrigir comentários
-# TODO: 
-from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-import spacy
 import re
-import csv
 
 def get_products(driver):
     soup = BeautifulSoup(driver.page_source, 'html.parser')

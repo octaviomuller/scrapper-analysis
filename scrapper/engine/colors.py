@@ -1,10 +1,6 @@
-# TODO: Corrigir comentários
-# TODO: Trocar método para temp file
-from selenium import webdriver
 import cv2
 import numpy as np
 from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
 
 def get_colors(driver):
     driver.execute_script("""
