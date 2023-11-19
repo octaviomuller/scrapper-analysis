@@ -19,6 +19,5 @@ def get_context(driver):
             texts.append(filtered_text)
 
     context = ' '.join(texts)
-    context = context.replace(",", "")
 
     return context

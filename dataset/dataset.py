@@ -1,4 +1,5 @@
-import csv
+import os
+import pandas as pd
 from typing import Any
 
 class Dataset:
@@ -7,29 +8,16 @@ class Dataset:
         self.data = data
 
     def save(self):
-        header = list(self.data.keys())
-        values = list(self.data.values())
+        df = None
 
-        try:
-            with open(self.path, 'r', newline='') as f:
-                reader = csv.DictReader(f)
-                lines = list(reader)
+        if os.path.getsize(self.path) == 0:
+            df = pd.DataFrame({}, columns=self.data.keys())
+        else:
+            df = pd.read_csv(self.path)
 
-                url_found = False
-                for i, line in enumerate(lines):
-                    if line["url"] == self.data.get("url", ""):
-                        lines[i] = self.data
-                        url_found = True
-                        break
-        except FileNotFoundError:
-            lines = []
-            url_found = False
+        if self.data['url'] in df['url'].values:
+            df.loc[df['url'] == self.data['url']] = self.data
+        else:
+            df = pd.concat([df, pd.DataFrame([self.data])], ignore_index=True)
 
-        if not url_found:
-            lines.append(self.data)
-
-        with open(self.path, 'w', newline='') as f:
-            writer = csv.DictWriter(f, fieldnames=header)
-            if not url_found:
-                writer.writeheader()
-            writer.writerows(lines)
+        df.to_csv(self.path, index=False)

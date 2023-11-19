@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "scrapper-analysis",
+        "type": "python",
+        "request": "launch",
+        "program": "main.py",
+        "console": "integratedTerminal",
+        "env": {},
+        "stopOnEntry": false,
+        "cwd": "${workspaceFolder}",
+      },
+    ]
+  }
+  
