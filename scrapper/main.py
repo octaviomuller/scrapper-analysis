@@ -18,12 +18,14 @@ class Scrapper:
     def execute(self):
         if not self.dataset_op:
             image_path = os.path.abspath('temp/screenshot.png')
-            template.open_template(self.colors(), self.fonts(), self.products(), image_path)
+            template.open_template(self.colors(), self.fonts(), self.context(), image_path)
+            
+            return
     
         dataset_info = {
-            'colors': self.colors(),
-            'fonts': self.fonts(),
-            'products': self.products(),
+            **self.colors(),
+            'font': self.font(),
+            'context': self.context(),
             'url': self.url
         }
 
@@ -45,27 +47,15 @@ class Scrapper:
 
     def colors(self):
         colors = engine.get_colors(self.driver)
-        if not self.dataset_op: return colors
         
-        return {
-            item['name']: {
-                item['rgb'],
-                item['percentage']
-            } for item in colors
-        }
+        return colors
 
-    def fonts(self):
-        fonts = engine.get_font_set(self.driver)
+    def font(self):
+        font = engine.get_most_common_font(self.driver)
         
-        if not self.dataset_op: return fonts
+        return font
 
-        return {
-            item['tag']: ''.join(item['fonts']) for item in fonts
-        }
+    def context(self):
+        context =  engine.get_context(self.driver)
 
-    def products(self):
-        products = engine.get_products(self.driver)
-
-        if not self.dataset_op: return products
-
-        return ''.join(products)
+        return context

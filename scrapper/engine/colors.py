@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from sklearn.cluster import KMeans
+from matplotlib.colors import rgb2hex
 
 def get_colors(driver):
     driver.execute_script("""
@@ -27,8 +28,9 @@ elements.forEach(e => e.parentNode.removeChild(e))
     color_set = list()
     for color, percentage in zip(colors, percentages):
         r, g, b = color.astype(int)
+        hex_color = rgb2hex([r/255, g/255, b/255])
         color_set.append({
-            'rgb': f'rgb({r}, {g}, {b})',
+            'rgb': hex_color,
             'percentage': percentage
         })
 
@@ -37,9 +39,13 @@ elements.forEach(e => e.parentNode.removeChild(e))
 
     color_set.sort(reverse=True, key=color_percentage)
 
-    colors_names = ['primary-color', 'secondary-color', 'accent-color']
-    for i in range(len(colors_names)):
-        color_set[i]['name'] = colors_names[i]
-        color_set[i]['percentage'] = round(color_set[i]['percentage'] * 100, 1)
+    colors = {
+        'primary-color': None,
+        'secondary-color': None,
+        'accent-color': None
+    }
 
-    return color_set[:3]
+    for i, [key, _] in enumerate(list(colors.items())):
+        colors[key] = color_set[i]['rgb']
+
+    return colors
