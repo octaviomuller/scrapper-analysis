@@ -86,9 +86,8 @@
 
         <div class="col" style="justify-content: center">
           {% for color in colors %}
-          <!-- color format 'rgb(0, 0, 0)'' -->
           <div class="text-with-shadow" style="color: {{color.rgb}}">
-            {{color.name}}: {{color.rgb}}; ({{color.percentage}}%)
+            {{color.rgb}}: ({{color.percentage}}%)
           </div>
           {% endfor %}
         </div>
@@ -99,20 +98,14 @@
           <div class="title">Fontes</div>
 
           <div class="list-container">
-            {% for font in fonts %}
-            <div class="text">
-              {{font.tag}}: <span style="font-family: {{font.fonts[0]}};">{{font.fonts[0]}}</span>
-            </div>
-            {% endfor %}
+            <span style="font-family: {{font}};">{{font}}</span>
           </div>
         </div>
         <div class="col">
           <div class="title">Produtos</div>
 
           <div class="list-container">
-            {% for product in products %}
-            <div class="text">• {{ product }}</div>
-            {% endfor %}
+            <div class="text">{{ context }}</div>
           </div>
         </div>
       </div>
@@ -122,38 +115,35 @@
   <script>
     const colors = {{ colors }}
 
-    // Dados do gráfico
     var data = {
       labels: ["Primária", "Secundária", "Accent"],
       datasets: [
         {
           data: [
             {{ colors[0].percentage }},
-        {{ colors[1].percentage }},
-      {{ colors[2].percentage }},
+            {{ colors[1].percentage }},
+            {{ colors[2].percentage }},
           ],
-    backgroundColor: [
-      "{{ colors[0].rgb }}",
-      "{{ colors[1].rgb }}",
-      "{{ colors[2].rgb }}",
-    ],
-      hoverBackgroundColor: [
-        "{{ colors[0].rgb }}",
-        "{{ colors[1].rgb }}",
-        "{{ colors[2].rgb }}",
-      ],
-    },
+          backgroundColor: [
+            "{{ colors[0].rgb }}",
+            "{{ colors[1].rgb }}",
+            "{{ colors[2].rgb }}",
+          ],
+          hoverBackgroundColor: [
+            "{{ colors[0].rgb }}",
+            "{{ colors[1].rgb }}",
+            "{{ colors[2].rgb }}",
+          ],
+        },
       ],
     };
 
-    // Configurações do gráfico
     var options = {
       responsive: true,
       maintainAspectRatio: false,
       borderColor: "black"
     };
 
-    // Criação do gráfico
     var ctx = document.getElementById("pie-chart").getContext("2d");
     var myPieChart = new Chart(ctx, {
       type: "pie",

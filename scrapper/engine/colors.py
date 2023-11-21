@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 from matplotlib.colors import rgb2hex
 
-def get_colors(driver):
+def get_colors(driver, dataset_op=True):
     driver.execute_script("""
 var elements = document.querySelectorAll('img');
 elements.forEach(e => e.parentNode.removeChild(e))
@@ -38,6 +38,9 @@ elements.forEach(e => e.parentNode.removeChild(e))
         return color['percentage']
 
     color_set.sort(reverse=True, key=color_percentage)
+
+    if dataset_op:
+        return color_set
 
     colors = {
         'primary-color': None,

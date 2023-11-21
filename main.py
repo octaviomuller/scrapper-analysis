@@ -1,9 +1,14 @@
+from dotenv import load_dotenv
+
+from routine.cronjob import job
 from scrapper.main import Scrapper
-from dataset import Dataset
+
+load_dotenv()
 
 def main():
-    data = Scrapper('https://www.kabum.com.br/', True).execute()
-    Dataset('dataset.csv', data).save()
+    Scrapper('https://www.kabum.com.br/', False).execute()
+    job()
+    
 
 if __name__ == '__main__':
     main()
