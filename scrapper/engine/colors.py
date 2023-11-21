@@ -34,6 +34,9 @@ elements.forEach(e => e.parentNode.removeChild(e))
             'percentage': percentage
         })
 
+    if len(colors) < 3:
+        raise Exception("Número de cores insuficiente")
+
     def color_percentage(color):
         return color['percentage']
 
