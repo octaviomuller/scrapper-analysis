@@ -6,21 +6,19 @@ from dataset import Dataset
 
 def job():
     sites = get_most_visited_sites('loja online')
-    error_request_url = []
     succes_request_url = []
+    error_request_url = []
 
-    sites.insert(0, "https://www.kabum.com.br/")
-
-    try:
-        for site in sites:
+    for site in sites:
+        try:
             data = Scrapper(site, True).execute()
             Dataset('dataset.csv', data).save()
             succes_request_url.append(site)
-    except:
-        error_request_url.append(site)
+        except Exception as error:
+            error_request_url.append({ 'url': site, 'error': error })
 
-    print(succes_request_url, error_request_url)
-
+    print('Sites analisados com sucesso: ', succes_request_url)
+    print('Sites não analisados: ', error_request_url)
 
 def scheduler(days):
     schedule.every(days).days.do(job)

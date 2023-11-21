@@ -39,7 +39,7 @@ elements.forEach(e => e.parentNode.removeChild(e))
 
     color_set.sort(reverse=True, key=color_percentage)
 
-    if dataset_op:
+    if not dataset_op:
         return color_set
 
     colors = {

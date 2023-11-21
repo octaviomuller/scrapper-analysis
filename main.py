@@ -6,7 +6,7 @@ from scrapper.main import Scrapper
 load_dotenv()
 
 def main():
-    Scrapper('https://www.kabum.com.br/', False).execute()
+    # Scrapper('https://www.lojaintegrada.com.br/', False).execute()
     job()
     
 

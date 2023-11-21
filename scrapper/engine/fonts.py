@@ -3,6 +3,9 @@ from selenium.common.exceptions import StaleElementReferenceException
 from collections import Counter
 
 def get_most_common(font_list):
+    if len(font_list) == 0:
+        return
+    
     counter = Counter(font_list)
     most_common = counter.most_common(1)[0][0]
 

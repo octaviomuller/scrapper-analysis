@@ -5,7 +5,6 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.'))
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from urllib.parse import urlparse, urlunparse
 
 import engine
 import template
@@ -50,7 +49,7 @@ class Scrapper:
         driver.get(self.url)
 
     def colors(self):
-        colors = engine.get_colors(self.driver)
+        colors = engine.get_colors(self.driver, self.dataset_op)
         
         return colors
 
