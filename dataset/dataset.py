@@ -16,7 +16,7 @@ class Dataset:
             df = pd.read_csv(self.path)
 
         if self.data['url'] in df['url'].values:
-            df.loc[df['url'] == self.data['url']] = self.data
+            df.loc[df['url'] == self.data['url'], list(self.data.keys())] = list(self.data.values())
         else:
             df = pd.concat([df, pd.DataFrame([self.data])], ignore_index=True)
 
