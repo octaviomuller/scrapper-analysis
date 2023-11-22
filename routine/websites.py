@@ -1,4 +1,5 @@
 import os
+import time
 from googleapiclient.discovery import build
 
 gs_api_key = os.environ["GOOGLE_SEARCH_API_KEY"]
@@ -9,9 +10,18 @@ def get_most_visited_sites(keyword, website_count):
 
     domains = "site:com.br OR site:com"
     query = f"{keyword} {domains}"
-    
-    res = service.cse().list(q=query, cx=cse_id, num=website_count, cr="countryBR").execute()
 
-    sites = map(lambda site: site['displayLink'], res['items'])
+    all_sites = []
+    max_results_per_page = 10
+
+    while len(all_sites) < website_count:
+        remaining_sites = website_count - len(all_sites)
+        current_results = min(max_results_per_page, remaining_sites)
+
+        res = service.cse().list(q=query, cx=cse_id, num=current_results, cr="countryBR", start=len(all_sites) + 1).execute()
+        sites = list(map(lambda site: site['displayLink'], res['items']))
+        all_sites.extend(sites)
+
+        time.sleep(5)
     
-    return list(sites)
+    return all_sites

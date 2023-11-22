@@ -18,6 +18,7 @@ def job(keyword, website_count):
         except Exception as error:
             error_request_url.append({ 'url': site, 'error': error })
 
+    print(f'Total de sites analisados com sucesso: { len(succes_request_url) } / { len(sites) }')
     print('Sites analisados com sucesso: ', succes_request_url)
     print('Sites não analisados: ', error_request_url)
 

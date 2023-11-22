@@ -5,7 +5,7 @@ from routine.cronjob import job
 load_dotenv()
 
 def main():
-    job('loja online', 10)
+    job('lojas online de departamentos diversos', 100)
     
 
 if __name__ == '__main__':
