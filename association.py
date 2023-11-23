@@ -25,7 +25,10 @@ def weighted_average_color(colors, teste):
 
     median_tones = [statistics.median(tone) for tone in color_tones]
 
-    hex_color = "#{:02x}{:02x}{:02x}".format(*median_tones)
+    # Converta os valores de ponto flutuante para inteiros
+    median_tones_int = [int(value) for value in median_tones]
+
+    hex_color = "#{:02x}{:02x}{:02x}".format(*median_tones_int)
 
     return hex_color
 
@@ -87,7 +90,7 @@ def associate_keywords_with_colors_and_font(keywords, dataset, similarity_thresh
 
 df = pd.read_csv('dataset.csv')
 
-result = associate_keywords_with_colors_and_font(["cosmético", "beleza", "maquiagem"], df, similarity_threshold=0.01)
+result = associate_keywords_with_colors_and_font(['loja', 'cosméticos', 'maquiagem', 'produtos', 'público', 'feminino'], df, similarity_threshold=0.01)
 
 if result is not None:
     print("Associação bem-sucedida:")
