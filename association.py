@@ -13,7 +13,7 @@ def apply_stemming(text):
     words = word_tokenize(text)
     stemmed_words = [stemmer.stem(word) for word in words]
     return ' '.join(stemmed_words)
-
+    
 def parse_hex_color(color):
     color = color.lstrip('#')
     return [int(color[i:i+2], 16) for i in (0, 2, 4)]
@@ -25,7 +25,6 @@ def weighted_average_color(colors, teste):
 
     median_tones = [statistics.median(tone) for tone in color_tones]
 
-    # Converta os valores de ponto flutuante para inteiros
     median_tones_int = [int(value) for value in median_tones]
 
     hex_color = "#{:02x}{:02x}{:02x}".format(*median_tones_int)
@@ -46,7 +45,9 @@ def most_frequent(lst):
     counts = lst.value_counts()
     return counts.idxmax()
 
-def associate_keywords_with_colors_and_font(keywords, dataset, similarity_threshold=0.3):
+def associate_keywords_with_colors_and_font(keywords, similarity_threshold=0.3):
+    dataset = pd.read_csv('dataset.csv') 
+    
     dataset['context'] = dataset['context'].fillna('')
 
     dataset['context'] = dataset['context'].apply(apply_stemming)
@@ -87,13 +88,3 @@ def associate_keywords_with_colors_and_font(keywords, dataset, similarity_thresh
         return result
     else:
         return None
-
-df = pd.read_csv('dataset.csv')
-
-result = associate_keywords_with_colors_and_font(['loja', 'cosméticos', 'maquiagem', 'produtos', 'público', 'feminino'], df, similarity_threshold=0.01)
-
-if result is not None:
-    print("Associação bem-sucedida:")
-    print(result)
-else:
-    print("Nenhuma associação encontrada.")
