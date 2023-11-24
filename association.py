@@ -6,6 +6,8 @@ from nltk.tokenize import word_tokenize
 import nltk
 import statistics
 
+from keyword_extractor import keyword_extractor
+
 nltk.download('punkt')
 
 def apply_stemming(text):
@@ -19,8 +21,6 @@ def parse_hex_color(color):
     return [int(color[i:i+2], 16) for i in (0, 2, 4)]
 
 def weighted_average_color(colors, teste):
-    print(teste)
-    print(colors)
     color_tones = list(zip(*colors))
 
     median_tones = [statistics.median(tone) for tone in color_tones]
@@ -63,8 +63,6 @@ def associate_keywords_with_colors_and_font(keywords, similarity_threshold=0.3):
 
     similarity_df = pd.DataFrame(cosine_sim.T, columns=['similarity'])
 
-    print(similarity_df)
-
     relevant_rows = similarity_df[similarity_df['similarity'] > similarity_threshold]
 
     if not relevant_rows.empty:
@@ -88,3 +86,8 @@ def associate_keywords_with_colors_and_font(keywords, similarity_threshold=0.3):
         return result
     else:
         return None
+
+data = "loja de jogos e vídeo games"
+keywords = keyword_extractor(data)
+result = associate_keywords_with_colors_and_font(keywords, similarity_threshold=0.01)
+print(result)

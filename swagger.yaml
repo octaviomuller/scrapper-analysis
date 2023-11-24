@@ -1,0 +1,224 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Mercado API
+  description: API para gerenciar produtos, descontos e ordens de compra 
+em um mercado.
+
+paths:
+  /produtos:
+    get:
+      summary: Listar produtos
+      description: Retorna uma lista de todos os produtos disponíveis.
+      responses:
+        200:
+          description: Sucesso
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Produto'
+
+    post:
+      summary: Adicionar produto
+      description: Adiciona um novo produto ao catálogo.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/NovoProduto'
+      responses:
+        201:
+          description: Produto criado com sucesso
+
+  /produtos/{produtoId}:
+    put:
+      summary: Atualizar produto
+      description: Atualiza as informações de um produto existente.
+      parameters:
+        - name: produtoId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Produto'
+      responses:
+        200:
+          description: Produto atualizado com sucesso
+
+    delete:
+      summary: Remover produto
+      description: Remove um produto do catálogo.
+      parameters:
+        - name: produtoId
+          in: path
+          type: string
+          required: true
+      responses:
+        204:
+          description: Produto removido com sucesso
+
+  /produtos/{produtoId}/skus:
+    post:
+      summary: Adicionar produto SKU
+      description: Adiciona um novo SKU (Stock Keeping Unit) a um produto 
+existente.
+      parameters:
+        - name: produtoId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/NovoSKU'
+      responses:
+        201:
+          description: SKU criado com sucesso
+
+  /produtos/{produtoId}/skus/{skuId}:
+    put:
+      summary: Atualizar produto SKU
+      description: Atualiza as informações de um SKU de um produto.
+      parameters:
+        - name: produtoId
+          in: path
+          type: string
+          required: true
+        - name: skuId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SKU'
+      responses:
+        200:
+          description: SKU atualizado com sucesso
+
+    delete:
+      summary: Remover produto SKU
+      description: Remove um SKU de um produto.
+      parameters:
+        - name: produtoId
+          in: path
+          type: string
+          required: true
+        - name: skuId
+          in: path
+          type: string
+          required: true
+      responses:
+        204:
+          description: SKU removido com sucesso
+
+  /descontos:
+    post:
+      summary: Adicionar desconto
+      description: Adiciona um novo desconto.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/NovoDesconto'
+      responses:
+        201:
+          description: Desconto criado com sucesso
+
+    delete:
+      summary: Remover desconto
+      description: Remove um desconto.
+      parameters:
+        - name: descontoId
+          in: query
+          type: string
+          required: true
+      responses:
+        204:
+          description: Desconto removido com sucesso
+
+  /ordens-compra:
+    post:
+      summary: Criar ordem de compra
+      description: Cria uma nova ordem de compra.
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/NovaOrdemCompra'
+      responses:
+        201:
+          description: Ordem de compra criada com sucesso
+
+definitions:
+  Produto:
+    type: object
+    properties:
+      id:
+        type: string
+      nome:
+        type: string
+      descricao:
+        type: string
+
+  NovoProduto:
+    type: object
+    properties:
+      nome:
+        type: string
+        example: "Produto Novo"
+      descricao:
+        type: string
+        example: "Descrição do Produto Novo"
+
+  SKU:
+    type: object
+    properties:
+      id:
+        type: string
+      nome:
+        type: string
+      preco:
+        type: number
+
+  NovoSKU:
+    type: object
+    properties:
+      nome:
+        type: string
+        example: "SKU Novo"
+      preco:
+        type: number
+        example: 20.99
+
+  NovoDesconto:
+    type: object
+    properties:
+      descricao:
+        type: string
+        example: "Desconto de 10%"
+      valor:
+        type: number
+        example: 10.0
+
+  NovaOrdemCompra:
+    type: object
+    properties:
+      produtos:
+        type: array
+        items:
+          type: object
+          properties:
+            produtoId:
+              type: string
+            quantidade:
+              type: integer
+

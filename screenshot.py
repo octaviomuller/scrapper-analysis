@@ -1,11 +1,8 @@
 import subprocess
 import time
 from selenium import webdriver
-from nturl2path import pathname2url
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-import os
-
 
 def capture_screenshot():
     # Iniciar o servidor HTTP com http-server

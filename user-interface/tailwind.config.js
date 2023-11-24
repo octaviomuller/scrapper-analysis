@@ -14,7 +14,7 @@ export default {
         primary: "#17191C",
         secondary: "#1C1F22",
         accent: "#C89CFF",
-        accent2: "#2C3035"
+        border: "#2C3035"
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif']
